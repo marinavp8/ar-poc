@@ -21,25 +21,33 @@ wheels/
 .installed.cfg
 *.egg
 
-# Virtual Environment
+# Entornos virtuales
+myenv/
 venv/
 ENV/
 
-# IDE specific files
+# IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-.DS_Store
 
-# TensorFlow/Model files
+# Sistema operativo
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# TensorFlow/Modelos descargados
 *.tflite
 *.pb
 *.ckpt
 *.h5
+.cache/
 
 # Logs
 *.log
 logs/
-
-myenv/

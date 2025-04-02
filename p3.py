@@ -3,7 +3,8 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import numpy as np
 
-model = hub.load('https://tfhub.dev/google/movenet/singlepose/lightning/3')
+# Cargar el modelo Thunder
+model = hub.load('https://tfhub.dev/google/movenet/singlepose/thunder/3')
 movenet = model.signatures['serving_default']
 
 # Definir los nombres de los puntos clave
@@ -37,7 +38,7 @@ if not cap.isOpened():
     print("Error: Could not open camera")
     exit()
 
-def draw_keypoints(frame, keypoints, confidence_threshold=0.3):
+def draw_keypoints(frame, keypoints, confidence_threshold=0.4):
     y, x, c = frame.shape
     shaped = np.squeeze(keypoints)
     kp = shaped.reshape(-1, 3)
@@ -82,23 +83,26 @@ while True:
         print("Failed to grab frame")
         break
 
+    # Redimensionar la imagen a 256x256 para Thunder
     img = frame.copy()
-    img = tf.image.resize_with_pad(np.expand_dims(img, axis=0), 192, 192)
+    img = tf.image.resize_with_pad(np.expand_dims(img, axis=0), 256, 256)
     img = tf.cast(img, dtype=tf.int32)
 
+    # Detectar poses
     results = movenet(input=img)
     keypoints = results['output_0']
 
-    draw_keypoints(frame, keypoints, confidence_threshold=0.3)
+    # Dibujar con umbral de confianza aumentado
+    draw_keypoints(frame, keypoints, confidence_threshold=0.4)
 
     # Mostrar título
-    cv2.putText(frame, 'MoveNet Lightning', (10, 30), 
+    cv2.putText(frame, 'MoveNet Thunder', (10, 30), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-    cv2.imshow('MoveNet Lightning Pose Detection', frame)
+    cv2.imshow('MoveNet Thunder Pose Detection', frame)
     
     if cv2.waitKey(25) & 0xFF == ord('q'):
         break
 
 cap.release()
-cv2.destroyAllWindows()
+cv2.destroyAllWindows() 

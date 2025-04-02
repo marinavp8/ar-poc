@@ -52,10 +52,9 @@ python p2.py
    - Más personalizable
    - Mejor para desarrollo avanzado
 
-## 🔧 Solución de Problemas Comunes
 
 
-## 🎥 Uso del Programa
+## Uso del Programa
 
 1. Activa el entorno virtual
 2. Ejecuta el programa (p1.py o p2.py)
